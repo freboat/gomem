@@ -1,0 +1,17 @@
+mem:  a native memory operations packge for golang,  which contains C's functions:   memcmp, memcpy, memmove, memset
+
+mem depends unsafe,  be carefull of   yourslef when you use it.   
+
+example:
+
+import (
+	"mem"
+)
+
+func test() {
+		var ii int = 2;
+		var ss [5]byte;
+		if  cap(ss) > 4  {       //make sure dst and src capcity >= len
+			mem.Memcpy( unsafe.Pointer(&ss[0]),  unsafe.Pointer(&ii),  4)
+		}
+}

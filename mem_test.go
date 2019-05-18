@@ -59,7 +59,6 @@ func TestMemmove( t *testing.T) {
 		t.Log("test Memmove:  pass")
 	}	
 	
-	
 }
 
 
