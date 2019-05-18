@@ -6,7 +6,7 @@ import (
 type usp = unsafe.Pointer
 type  size_t  = int   //always, we pass into functions with the result of len(slice),  which is int
 
-//just AS C's memcpy, make sure the dest and src capcity >= len
+//just as C's memcpy, make sure the dest and src capcity >= len
 //Memcpy can not handle dest and src overlap condition
 func Memcpy(dest, src unsafe.Pointer, len size_t) (unsafe.Pointer) {
 	

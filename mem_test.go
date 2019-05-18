@@ -7,8 +7,6 @@ import  (
 //`$go test`   to run 
 func TestMemmove( t *testing.T) {
 	
-	
-
 	var s[]byte = []byte{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
 	var dst1, dst2 [20]byte
 	
@@ -113,5 +111,37 @@ func TestMemcmp( t *testing.T) {
 		} else {
 			t.Log("test Memcmp 5: pass")
 		}
+		
+}
+
+
+func TestMemset( t *testing.T) {
+	
+	var s []byte = []byte{'2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2'}
+	var dst1, dst2 [20]byte
+	
+	Memset(unsafe.Pointer(&dst2[0]), 0x00, 5)
+	
+	if  Memcmp(unsafe.Pointer(&dst2[0]), unsafe.Pointer(&dst1[0]), 5)!=0 {
+		t.Error("test Memset: failed")
+	} else {
+		t.Log("test Memset:  pass")
+	}	
+	
+	Memset(unsafe.Pointer(&dst1[0]), '2', 5)
+	if  Memcmp(unsafe.Pointer(&dst1[0]), unsafe.Pointer(&s[0]), 5)!=0 {
+		t.Error("test Memset: failed")
+	} else {
+		t.Log("test Memset:  pass")
+	}	
+	
+	//len > 8
+	Memset(unsafe.Pointer(&dst1[0]), '2', len(s)-1)
+	if  Memcmp(unsafe.Pointer(&dst1[0]), unsafe.Pointer(&s[0]), len(s)-1)!=0 {
+		t.Error("test Memset: failed")
+	} else {
+		t.Log("test Memset:  pass")
+	}	
+	
 		
 }
