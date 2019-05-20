@@ -2,6 +2,10 @@ mem:  a native memory operations packge for golang,  which contains C's function
 
 mem depends unsafe,  be carefull of   yourslef when you use it.   
 
+test only simple native types and slice,  such as  int8, uint32,  uint64,   int32 slice, etc.
+
+do not call it when memorry src or dst address is complex struct  or expand the struct into simple types to call this packge :)
+
 example:
 
 import (
@@ -9,9 +13,9 @@ import (
 )
 
 func test() {
-		var ii int = 2;
-		var ss [5]byte;
-		if  cap(ss) > 4  {       //make sure dst and src capcity >= len
-			mem.Memcpy( unsafe.Pointer(&ss[0]),  unsafe.Pointer(&ii),  4)
-		}
+	var ii int = 2;
+	var ss [5]byte;
+	if  cap(ss) > 4  {       //make sure dst and src capcity >= len
+		mem.Memcpy( unsafe.Pointer(&ss[0]),  unsafe.Pointer(&ii),  4)    //for slice, get &ss[n] address not &ss
+	}
 }
