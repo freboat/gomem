@@ -1,7 +1,11 @@
 package mem
 
 
-//todo: 1. time support,  NULL support
+//todo list: 
+//1. time support
+//2. nest struct
+//3. null and ORM support
+
 import(
     //"time"
     "reflect"
@@ -60,9 +64,7 @@ func strSave(dest []byte, src Ptr, ti *TypeInfo, n int) Ptr {
 
 func strDump(src []byte, dest Ptr, ti *TypeInfo, n int) Ptr {
     p := (*string)(dest)
-    
     size  := (*uint16)(Ptr(&src[ti.Pos[n]]))
-
     *p = string(src[ti.Pos[n]+2:ti.Pos[n]+2+ int(*size)])
     
     return nil
@@ -86,13 +88,13 @@ func (container *Container) Dump(n int, obj Ptr) {
 }
 
 
-func Parse(intf interface {}) (ti *TypeInfo){
+func Parse(intf interface {}) (* Container){
     
     fields := reflect.TypeOf(intf)
     values := reflect.ValueOf(intf)
     
     num := fields.NumField()
-    ti = &TypeInfo {
+    ti := &TypeInfo {
         fields: num,
         Type : make([]uint, num),
         Pos : make([]int, num),
@@ -130,6 +132,10 @@ func Parse(intf interface {}) (ti *TypeInfo){
         ti.Offset[i] = field.Offset
         length += ti.Size[i]
     }
-    return ti    
+    container := &Container{
+        ti : ti,
+        Rows : make([]Row,0),
+    }
+    return container
 }
 
